@@ -1,0 +1,17 @@
+apiVersion: sql.tanzu.vmware.com/v1
+kind: Postgres
+metadata:
+  name: pg-instance-example
+  namespace: vmware-poc
+spec:
+  memory: 800Mi
+  cpu: "0.8"
+  storageClassName: local-path 
+  storageSize: 850M
+  pgConfig:
+    dbname: pg-instance-example
+    username: pgadmin
+  serviceType: LoadBalancer
+  highAvailability:
+    enabled: false
+  logLevel: Debug
