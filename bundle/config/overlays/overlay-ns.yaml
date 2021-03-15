@@ -1,0 +1,46 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"kind":"Namespace", "metadata": {"name": "vmware-poc"}}), expects="0+"
+#@overlay/remove
+---
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: #@ data.values.namespace
+
+#@overlay/match by=overlay.subset({"metadata": {"namespace": "vmware-poc"}}), expects="1+"
+---
+metadata:
+  #@overlay/match missing_ok=True
+  namespace: #@ data.values.namespace
+
+#@overlay/match by=overlay.subset({"kind":"ClusterRoleBinding"})
+---
+subjects:
+#@overlay/match by=overlay.index(0)
+- kind: ServiceAccount
+  #@overlay/match missing_ok=True
+  namespace: #@ data.values.namespace
+
+#@overlay/match by=overlay.subset({"kind":"MutatingWebhookConfiguration"})
+---
+webhooks:
+#@overlay/match by="name"
+- admissionReviewVersions:
+  name: mpostgres.kb.io
+  clientConfig:
+    service:
+      namespace: #@ data.values.namespace
+
+#@overlay/match by=overlay.subset({"kind":"ValidatingWebhookConfiguration"})
+---
+webhooks:
+#@overlay/match by="name"
+- admissionReviewVersions:
+  name: vpostgres.kb.io
+  clientConfig:
+    service:
+      namespace: #@ data.values.namespace

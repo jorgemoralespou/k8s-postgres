@@ -1,0 +1,31 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"kind":"Deployment", "metadata": {"name": "postgres-operator"}})
+---
+spec:
+  template:
+    spec:
+      containers:
+        #@overlay/match by="name"
+        - name: postgres-operator
+          image: #@ "{}:{}".format( data.values.operatorImageRepository, data.values.operatorImageTag)
+          env:
+          #@overlay/match by="name"
+          - name: POSTGRES_IMAGE_REPO
+            value: #@ data.values.postgresImageRepository
+          #@overlay/match by="name"
+          - name: POSTGRES_IMAGE_TAG
+            value: #@ data.values.postgresImageTag
+          #@overlay/match by="name"
+          - name: OPERATOR_IMAGE_REPO
+            value: #@ data.values.operatorImageRepository
+          #@overlay/match by="name"
+          - name: OPERATOR_IMAGE_TAG
+            value: #@ data.values.operatorImageTag
+          #@overlay/match by="name"
+          - name: DOCKER_REGISTRY_SECRET_NAME
+            value: #@ data.values.dockerRegistrySecretName
+      #@overlay/replace
+      imagePullSecrets:
+        - name: #@ data.values.dockerRegistrySecretName

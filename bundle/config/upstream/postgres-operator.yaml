@@ -19,20 +19,20 @@ spec:
       serviceAccountName: postgres-operator-service-account
       containers:
         - name: postgres-operator
-          image: {{ .Values.operatorImageRepository }}:{{ .Values.operatorImageTag }}
+          image: postgres-operator:v1.1.0-dev.4.gf51018d
           command: ["./manager", "--webhook-cert-directory", "/tmp/postgres-operator-webhook-server-cert-secret"]
           imagePullPolicy: IfNotPresent
           env:
           - name: POSTGRES_IMAGE_REPO
-            value: {{ .Values.postgresImageRepository }}
+            value: postgres-instance
           - name: POSTGRES_IMAGE_TAG
-            value: {{ .Values.postgresImageTag }}
+            value: v1.1.0-dev.4.gf51018d
           - name: OPERATOR_IMAGE_REPO
-            value: {{ .Values.operatorImageRepository }}
+            value: postgres-operator
           - name: OPERATOR_IMAGE_TAG
-            value: {{ .Values.operatorImageTag }}
+            value: v1.1.0-dev.4.gf51018d
           - name: DOCKER_REGISTRY_SECRET_NAME
-            value: {{ .Values.dockerRegistrySecretName }}
+            value: regsecret
           readinessProbe:
             exec:
               command:
@@ -49,7 +49,7 @@ spec:
               name: postgres-operator-webhook-server-cert-secret
               readOnly: true
       imagePullSecrets:
-        - name: {{ .Values.dockerRegistrySecretName }}
+        - name: regsecret
       volumes:
         - name: postgres-operator-webhook-server-cert-secret
           secret:

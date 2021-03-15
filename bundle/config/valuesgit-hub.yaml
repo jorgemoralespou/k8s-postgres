@@ -1,11 +1,13 @@
+#@data/values
 ---
+namespace: vmware-poc
+
 # specify the url for the docker image for the operator, e.g. gcr.io/<my_project>/postgres-operator
-operatorImageRepository: postgres-operator
-operatorImageTag: v1.1.0-dev.4.gf51018d
+operatorImageRepository:  danielepalaia/operator-openshift 
+operatorImageTag: latest 
 
 # specify the docker image for postgres instance, e.g. gcr.io/<my_project>/postgres-instance
-postgresImageRepository: postgres-instance
-postgresImageTag: v1.1.0-dev.4.gf51018d
-
+postgresImageRepository:  danielepalaia/postgres-instance-openshift
+postgresImageTag: latest
 # specify the name of the docker-registry secret to allow the cluster to authenticate with the container registry for pulling images
-dockerRegistrySecretName: regsecret
+dockerRegistrySecretName: regsecret 

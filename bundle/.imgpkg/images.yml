@@ -1,0 +1,7 @@
+---
+apiVersion: imgpkg.carvel.dev/v1alpha1
+images:
+- annotations:
+    kbld.carvel.dev/id: danielepalaia/operator-openshift:latest
+  image: index.docker.io/danielepalaia/operator-openshift@sha256:9646a74ad0388d18fac915d13a8bd31087abf29ddec2abdf20fb79670b424ecc
+kind: ImagesLock

@@ -1,0 +1,9 @@
+apiVersion: imgpkg.carvel.dev/v1alpha1
+kind: Bundle
+metadata:
+  name: postgres-operator
+authors:
+- name: Jorge Morales
+  email: jomorales@vmware.com
+websites:
+- url: network.pivotal.io/products/tanzu-sql-postgres
