@@ -3,6 +3,11 @@
 
 #@overlay/match by=overlay.subset({"kind":"Deployment", "metadata": {"name": "postgres-operator"}})
 ---
+metadata:
+  #@overlay/match missing_ok=True
+  annotations:
+    #@overlay/match missing_ok=True
+    instance-image: #@ "{}:{}".format( data.values.postgresImageRepository, data.values.postgresImageTag)
 spec:
   template:
     spec:

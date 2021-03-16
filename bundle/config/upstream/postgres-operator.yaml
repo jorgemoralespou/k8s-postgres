@@ -3,9 +3,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres-operator
-  namespace: vmware-poc 
+  namespace: default 
   labels:
     app: postgres-operator
+  annotations:
+    instance-image: "postgres-instance:v1.1.0-dev.4.gf51018d"
 spec:
   replicas: 1
   selector:

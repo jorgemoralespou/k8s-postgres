@@ -4,4 +4,7 @@ images:
 - annotations:
     kbld.carvel.dev/id: danielepalaia/operator-openshift:latest
   image: index.docker.io/danielepalaia/operator-openshift@sha256:9646a74ad0388d18fac915d13a8bd31087abf29ddec2abdf20fb79670b424ecc
+- annotations:
+    kbld.carvel.dev/id: danielepalaia/postgres-instance-openshift:latest
+  image: index.docker.io/danielepalaia/postgres-instance-openshift@sha256:304e69c867956a5e10a204c0587c81916b2e250156ab1a2b873a8a6941709af5
 kind: ImagesLock

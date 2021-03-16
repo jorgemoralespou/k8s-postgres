@@ -1,23 +1,21 @@
 #@ load("@ytt:data", "data")
 #@ load("@ytt:overlay", "overlay")
 
-#@overlay/match by=overlay.subset({"kind":"Namespace", "metadata": {"name": "vmware-poc"}}), expects="0+"
-#@overlay/remove
----
-
+#! Only create namespace if is not default, as default should already exist
+#@ if/end data.values.namespace!="default":
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: #@ data.values.namespace
 
-#@overlay/match by=overlay.subset({"metadata": {"namespace": "vmware-poc"}}), expects="1+"
+#@overlay/match by=overlay.subset({"metadata": {"namespace": "default"}}), expects="1+"
 ---
 metadata:
   #@overlay/match missing_ok=True
   namespace: #@ data.values.namespace
 
-#@overlay/match by=overlay.subset({"kind":"ClusterRoleBinding"})
+#@overlay/match by=overlay.subset({"kind":"ClusterRoleBinding"}), expects="1+"
 ---
 subjects:
 #@overlay/match by=overlay.index(0)
